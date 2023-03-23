@@ -15,6 +15,5 @@ test:
   database: journalapp_test
 production:
   <<: *default
-  database: journalapp_production
-  username: journalapp
-  password: <%= ENV["JOURNALAPP_DATABASE_PASSWORD"] %>
+   url: <%= ENV['DATABASE_URL'] %>
+
