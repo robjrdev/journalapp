@@ -2,6 +2,7 @@
   <div>
     <%= f.label :title%>
     <%= f.text_field :title%>
+    <%= f.number_field :user_id, id: :category_user_id, value: current_user.id, type: :hidden%>
     <% category.errors.full_messages_for(:title).each do |message|%>
       <div><%= message%></div>
     <%end%>
