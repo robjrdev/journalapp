@@ -1,21 +1,18 @@
 class TasksController < ApplicationController
     before_action :get_category
     def index
-       @tasks = @category.tasks.all
+       @tasks = @category.tasks
     end
+
     def show
-        @category = Category.find(params[:category_id])
-        @tasks = @category.tasks
+        @task = @category.tasks.find(params[:id])
     end
     
-
     def new
-        @category = Category.find(params[:category_id])
-        @task = @category.tasks.create(task_params)
+        @task = @category.tasks.build
     end
 
     def create
-        @category = Category.find(params[:category_id])
         @task = @category.tasks.create(task_params)
         if @task.save
           redirect_to category_tasks_path(@category), notice: "Task was successfully created."
@@ -24,9 +21,9 @@ class TasksController < ApplicationController
         end
       end
 
-    def edit 
+      def edit
         @task = @category.tasks.find(params[:id])
-    end
+      end
 
     def update
         @tasks = @category.tasks.find(params[:id])
@@ -49,5 +46,8 @@ class TasksController < ApplicationController
 
     def get_category
         @category = Category.find(params[:category_id])
+        if params[:id]
+            @task = @category.tasks.find(params[:id])
+        end
     end
 end
