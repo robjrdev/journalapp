@@ -1,4 +1,5 @@
 class TasksController < ApplicationController
+    before_action :authenticate_user!
     before_action :get_category
     def index
        @tasks = @category.tasks
@@ -9,14 +10,16 @@ class TasksController < ApplicationController
     end
     
     def new
-        @task = @category.tasks.build
+        @task = @category.tasks.new
     end
 
     def create
-        @task = @category.tasks.create(task_params)
+        @task = @category.tasks.new(task_params)
         if @task.save
+            
           redirect_to category_tasks_path(@category), notice: "Task was successfully created."
         else
+          puts "NOT SAVE"
           render :new
         end
       end
@@ -26,13 +29,16 @@ class TasksController < ApplicationController
       end
 
     def update
-        @tasks = @category.tasks.find(params[:id])
-        if @task.update(task_params)
-            redirect_to category_path(@category)
+        @task = @category.tasks.find(params[:id])
+        if @task.update(params_wo_require)
+            redirect_to category_tasks_path
         else
+            puts "Not Patched"
             render :edit
         end
     end
+
+
 
     def destroy
         @task = @category.tasks.find(params[:id])
@@ -41,13 +47,14 @@ class TasksController < ApplicationController
     end
     private
     def task_params
-        params.fetch(:task, {}).permit(:title, :description, :deadline)
+        params.require(:task).permit(:title, :description, :deadline, :status)
     end
 
     def get_category
         @category = Category.find(params[:category_id])
-        if params[:id]
-            @task = @category.tasks.find(params[:id])
-        end
+    end
+
+    def params_wo_require
+        params.permit(:title, :description, :deadline, :status)
     end
 end

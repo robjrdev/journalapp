@@ -1,13 +1,13 @@
-<%= form_with model: category do |f|%>
-  <div>
-    <%= f.label :title%>
-    <%= f.text_field :title%>
-    <%= f.number_field :user_id, id: :category_user_id, value: current_user.id, type: :hidden%>
-    <% category.errors.full_messages_for(:title).each do |message|%>
-      <div><%= message%></div>
-    <%end%>
+<%= form_with model: category do |f| %>
+  <div class="mb-4">
+    <%= f.label :title, class: "block font-bold mb-2"%>
+    <%= f.text_field :title, class: "form-input"%>
+    <%= f.number_field :user_id, id: :category_user_id, value: current_user.id, type: :hidden %>
+    <% category.errors.full_messages_for(:title).each do |message| %>
+      <div class="text-red-500 mt-2"><%= message %></div>
+    <% end %>
   </div>
   <div>
-    <%= f.submit%>
+    <%= f.submit class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"%>
   </div>
-<%end%>
+<% end %>

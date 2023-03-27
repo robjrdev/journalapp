@@ -1,12 +1,40 @@
-<table>
-  <tr>
-    <th>Title</th>
-    <th>Description</th>
-    <th>Deadline</th>
-  </tr>
-  <tr>
-    <td><%= @task.title%></td>
-    <td><%= @task.description%></td>
-    <td><%= @task.deadline%></td>
-  </tr>
-</table>
+<div class="w-full flex justify-center">
+  <div class="p-4 w-2/4">
+    <h1 class="text-2xl font-bold mb-4"><%= @category.title %></h1>
+    <table class="table-fixed w-full">
+      <thead>
+        <tr>
+          <th class="w-1/4 py-2">Title</th>
+          <th class="w-1/2 py-2">Description</th>
+          <th class="w-1/4 py-2">Deadline</th>
+          <th class="w-1/4 py-2">Status</th>
+          <th class="w-1/4 py-2">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="border py-2 px-4 text-center"><%= @task.title %></td>
+          <td class="border py-2 px-4 text-center"><%= @task.description %></td>
+          <td class="border py-2 px-4 text-center"><%= @task.deadline %></td>
+          <td class="border py-2 px-4 text-center">
+            <% if @task.status == 1 %>
+              <span class="bg-yellow-200 text-yellow-800 rounded-full py-1 px-3">Pending</span>
+            <% else %>
+              <span class="bg-green-200 text-green-800 rounded-full py-1 px-3">Completed</span>
+            <% end %>
+          </td>
+          <td class="border py-2 px-4">
+            <% if @task.status == 1 %>
+              <%= button_to "Mark as Completed", category_task_path(id: @task.id, category_id: @task.category_id, status: 2), method: :patch, class: "text-white bg-green-500 hover:bg-green-700 font-bold py-2 px-4 rounded" %>
+            <% else %>
+              <%= button_to "Mark as Pending", category_task_path(id: @task.id, category_id: @task.category_id, status: 1), method: :patch, class: "text-white bg-yellow-500 hover:bg-yellow-700 font-bold py-2 px-4 rounded" %>
+            <% end %>
+            <%= link_to "", category_task_path(@category, @task), class: "fa-solid fa-eye text-blue-500 hover:text-blue-700 mx-2" %>
+            <%= link_to "", edit_category_task_path(id: @task.id, category_id: @task.category_id), method: :patch, class: "fas fa-edit text-blue-500 hover:text-blue-700 mx-2" %>
+            <%= link_to "", category_task_path(@category, @task), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "fas fa-trash-alt text-red-500 hover:text-red-700 mx-2" %>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
