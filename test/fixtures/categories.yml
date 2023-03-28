@@ -1,7 +1,8 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 one:
-  title: MyString
+ title: Category1
+ user: one
+
 
 two:
-  title: MyString
+ title: Category2
+ user: two
