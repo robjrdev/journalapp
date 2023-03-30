@@ -30,7 +30,7 @@ class TasksController < ApplicationController
 
     def update
         @task = @category.tasks.find(params[:id])
-        if @task.update(params_wo_require)
+        if @task.update(task_params)
             redirect_to category_tasks_path
         else
             puts "Not Patched"
